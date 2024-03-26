@@ -1,3 +1,5 @@
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/darknessggz/AutoFarm-My-Supermarket/main/My%20supermarket%20Autofarm"))()
+
 wait(0.4)
 game.StarterGui:SetCore("SendNotification", {
 	Title = "My Resturant Autofarm";
