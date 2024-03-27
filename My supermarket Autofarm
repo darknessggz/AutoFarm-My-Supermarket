@@ -28,6 +28,10 @@ local button2 = Instance.new("TextButton")
 local Credit = Instance.new("TextLabel")
 local button5 = Instance.new("TextButton")
 local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+local UICorner_3 = Instance.new("UICorner")
+local button6 = Instance.new("TextButton")
+local button7 = Instance.new("TextButton")
 
 --Properties:
 
@@ -64,18 +68,20 @@ button3.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 button3.BorderColor3 = Color3.fromRGB(0, 0, 0)
 button3.BorderSizePixel = 0
 button3.Position = UDim2.new(0.511470973, 0, 0.529978991, 0)
-button3.Size = UDim2.new(0, 57, 0, 23)
+button3.Size = UDim2.new(0, 42, 0, 23)
 button3.Font = Enum.Font.SourceSans
 button3.TextColor3 = Color3.fromRGB(0, 0, 0)
 button3.TextSize = 14.000
 button3.Text = "OFF"
+UICorner_3.CornerRadius = UDim.new(1, 0)
+UICorner_3.Parent = button3
 
 local isToggled = false
 
 
-	button3.MouseButton1Click:Connect(function()
-		isToggled = not isToggled
-		if isToggled then
+button3.MouseButton1Click:Connect(function()
+	isToggled = not isToggled
+	if isToggled then
 		button3.Text = "ON"
 		button3.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 		--print("Button clicked, isToggled:", isToggled)
@@ -104,7 +110,7 @@ local isToggled = false
 		button3.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red color
 		--print("Button clicked, isToggled:", isToggled)
 	end
-	end)
+end)
 
 button4.Name = "button4"
 button4.Parent = main
@@ -241,18 +247,20 @@ button2.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 button2.BorderColor3 = Color3.fromRGB(0, 0, 0)
 button2.BorderSizePixel = 0
 button2.Position = UDim2.new(0.511470973, 0, 0.353295863, 0)
-button2.Size = UDim2.new(0, 57, 0, 23)
+button2.Size = UDim2.new(0, 42, 0, 23)
 button2.Font = Enum.Font.SourceSans
 button2.TextColor3 = Color3.fromRGB(0, 0, 0)
 button2.TextSize = 14.000
 button2.Text = "OFF"
+UICorner_2.CornerRadius = UDim.new(1, 0)
+UICorner_2.Parent = button2
 
 local isToggled = false
 
 
-	button2.MouseButton1Click:Connect(function()
-		isToggled = not isToggled
-		if isToggled then
+button2.MouseButton1Click:Connect(function()
+	isToggled = not isToggled
+	if isToggled then
 		button2.Text = "ON"
 		button2.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
 		print("Button clicked, isToggled:", isToggled)
@@ -281,7 +289,7 @@ local isToggled = false
 		button2.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red color
 		print("Button clicked, isToggled:", isToggled)
 	end
-	end)
+end)
 
 
 
@@ -318,6 +326,45 @@ UICorner.CornerRadius = UDim.new(1, 0)
 UICorner.Parent = button5
 
 
+
+button6.Name = "button6"
+button6.Parent = main
+button6.BackgroundColor3 = Color3.fromRGB(0, 157, 255)
+button6.BorderColor3 = Color3.fromRGB(0, 0, 0)
+button6.BorderSizePixel = 0
+button6.Position = UDim2.new(0.770930767, 0, 0.353291273, 0)
+button6.Size = UDim2.new(0, 36, 0, 23)
+button6.Font = Enum.Font.SourceSans
+button6.Text = "Market"
+button6.TextColor3 = Color3.fromRGB(0, 0, 0)
+button6.TextSize = 14.000
+button6.MouseButton1Click:Connect(function()
+	local part = game:GetService("Workspace").Environment.YuanJing.WaiLiMian.ZhiShiDiMian01
+	humanoid.RootPart.CFrame = part.CFrame
+	print("Teleported")
+end)
+
+
+button7.Name = "button7"
+button7.Parent = main
+button7.BackgroundColor3 = Color3.fromRGB(0, 157, 255)
+button7.BorderColor3 = Color3.fromRGB(0, 0, 0)
+button7.BorderSizePixel = 0
+button7.Position = UDim2.new(0.770930767, 0, 0.529170692, 0)
+button7.Size = UDim2.new(0, 36, 0, 23)
+button7.Font = Enum.Font.SourceSans
+button7.Text = "Home"
+button7.TextColor3 = Color3.fromRGB(0, 0, 0)
+button7.TextSize = 14.000
+button7.MouseButton1Click:Connect(function()
+	local part = game:GetService("Workspace").Moon.HelpPoints.BuildAreaPoints.BuildBlocks.BlockInterior_1_42_36.BlockModel
+	humanoid.RootPart.CFrame = part.CFrame
+	print("Teleported")
+end)
+
+
+
+
 -- notification for ?
 button5.MouseButton1Click:Connect(function()
 	-- Send a notification when button5 is clicked
@@ -329,7 +376,39 @@ button5.MouseButton1Click:Connect(function()
 end)
 
 
+-- for dragging on pc
+local dragging
+local dragStart
+local startPos
 
+local function updateDrag(input)
+	local delta = input.Position - dragStart
+	main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
 
+main.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = true
+		dragStart = input.Position
+		startPos = main.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+main.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
+		updateDrag(input)
+	end
+end)
+
+main.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
+	end
+end)
 
 
